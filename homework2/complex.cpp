@@ -1,12 +1,14 @@
 #include "complex.h"
 
-#include <iostream>
+ #include <iostream>
 
 
 complexNum::complexNum()//eðer kullanýcý veri girmeden yollarsa default constructor'umuz a ve b deðerlerine 0 atayacak
 {
-	this->a = 0;
+	this->A = 0;
 	this->b = 0;
+	this->a = 0;
+	kontrolIntDouble = true;
 }
 
 /*
@@ -17,27 +19,42 @@ complexNum::complexNum(const double& a)
 {
 	this->a = a;
 	this->b = 0;
+	this->A = 0;
 }
 
 complexNum::complexNum(const int& a)
 {
-	this->a = a;
+	this->A = a;
 	this->b = 0;
+	this->a = 0;
+	kontrolIntDouble = true;
 }
 
 complexNum::complexNum(const std::string& text)
 {
 	a = 0;
 	b = 0;
+	A = 0;
 	this->text = text;
 	deleteSpace();
+	control();
+	textDivide();
 }
 
-//2 parametreli constructor
-complexNum::complexNum(const double& a, const double& b)
+//2 parametreli constructors
+complexNum::complexNum(const double& a, const int& b)
 {
 	this->a = a;
 	this->b = b;
+	this->A = 0;
+}
+
+complexNum::complexNum(const int& a, const int& b)
+{
+	this->A = a;
+	this->b = b;
+	this->a = 0;
+	kontrolIntDouble = true;
 }
 
 void complexNum::deleteSpace()
@@ -53,73 +70,126 @@ void complexNum::deleteSpace()
 	}
 }
 
-void complexNum::textDivide()
+void complexNum::control()
 {
-	for (int i = 0; i < kopyala.length; i++)
+	for (int i = 0; i < kopyala.length(); i++)
 	{
-		if (kopyala[i+1] == '+' || kopyala[i + 1] == '-')
+		if (!(kopyala[i] == '+' || kopyala[i] == '-'  || kopyala[i] == 'i' || (kopyala[i] >= '0' && kopyala[i] <= '9')))
 		{
-			if (kopyala[i] == 'i')
-			{
-				if (i == 0)
-				{
-					b = 1;
-				}
-				
-				else if (i == 1)
-				{
-					if (kopyala[0] == '+')
-					{
-						arti_eksi_B = true;
-					}
-					else if (kopyala[0] == '-')
-					{
-						arti_eksi_B = false;
-					}
-				}
-				
-				else
-				{
-					if (kopyala[0] == '+')
-					{
-						arti_eksi_B = true;
-						for (int j = 1; j < i; i++)
-						{
-							bTut += kopyala[j];
-						}
-					}
-
-					else if(kopyala[0] == '-')
-					{
-						arti_eksi_B = false;
-						for (int j = 1; j < i; i++)
-						{
-							bTut += kopyala[j];
-						}
-					}
-				}
-			}
-			
-			else
-			{
-
-
-			}
-
+			throw(0);
 		}
 	}
 }
 
+void complexNum::textDivide()
+{
+	int arti_eksi_sira;
+	int i_sira;
+	
+	
+	if ((kopyala[0] == '+' || kopyala[0] == '-') && (kopyala[1] >= '0' && kopyala[1] <= '9'))
+	{
+		std::string isaretsiz_string;
+		isaretsiz_string = &kopyala[1];
+		arti_eksi_sira = isaretsiz_string.find('+');
+		if (arti_eksi_sira == std::string::npos)
+		{
+			arti_eksi_sira = isaretsiz_string.find('-');
+			if (arti_eksi_sira == std::string::npos)
+			{
+				A = 0;
+				b = 0;
+				a = 0;
+				std::cout << "Hatali giris" << std::endl;
+				kontrolIntDouble = true;
+				return;
+			}
+		}
+
+		for (int i = 0; i < arti_eksi_sira+1; i++)
+		{
+			aTut += kopyala[i];
+		}
+		arti_eksi_sira += 1;
+	}
+
+	else if(kopyala[1] >= '0' && kopyala[1] <= '9')
+	{
+		arti_eksi_sira = kopyala.find('+');
+		if (arti_eksi_sira == std::string::npos)
+		{
+			arti_eksi_sira = kopyala.find('-');
+			if (arti_eksi_sira == std::string::npos)
+			{
+				A = 0;
+				b = 0;
+				a = 0;
+				std::cout << "Hatali giris" << std::endl;
+				kontrolIntDouble = true;
+				return;
+			}
+		}
+
+
+		for (int i = 0; i < arti_eksi_sira; i++)
+		{
+			aTut += kopyala[i];
+		}
+	}
+
+
+
+	i_sira = kopyala.find('i');
+	if (i_sira == std::string::npos)
+	{
+		A = 0;
+		b = 0;
+		a = 0;
+		std::cout << "Hatali giris" << std::endl;
+		kontrolIntDouble = true;
+		return;
+	}
+
+
+	for (int i = arti_eksi_sira ; i < i_sira; i++)
+	{
+		bTut += kopyala[i];
+	}
+	
+
+	
+
+	std::cout << aTut << std::endl;
+	std::cout << bTut << std::endl;
+
+}
+
+
 void complexNum::print()
 {
-	if (b >= 0)
+	if (kontrolIntDouble == false)
 	{
-		std::cout << "karmasik sayi: " << a << "+" << b << "i" << std::endl;
+		if (b >= 0)
+		{
+			std::cout << "karmasik sayi: " << a << "+" << b << "i" << std::endl;
+		}
+		else
+		{
+			std::cout << "karmasik sayi: " << a << b << "i" << std::endl;
+		}
 	}
 	else
 	{
-		std::cout << "karmasik sayi: " << a << b << "i" << std::endl;
+		if (b >= 0)
+		{
+			std::cout << "karmasik sayi: " << A << "+" << b << "i" << std::endl;
+		}
+		else
+		{
+			std::cout << "karmasik sayi: " << A << b << "i" << std::endl;
+		}
 	}
+	
 }
 
 

@@ -1,12 +1,23 @@
+#include <iostream>
 #include "complex.h"
+
+using namespace std;
 
 
 int main()
 {
-	complexNum sayi("a   +      b  i");
-	sayi.print();
-
-
+	try
+	{
+		complexNum sayi("+2i");
+	}
+	catch (int &a)
+	{
+		if (a == 0)
+		{
+			cout << "Hata!!" << endl;
+		}
+	}
+	
 
 	return 0;
 }
