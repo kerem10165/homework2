@@ -40,7 +40,7 @@ complexNum::complexNum(const std::string& text)
 	control();
 	counter();
 	tokenString();
-	std::cout << aTut << bTut << std::endl;
+	convertNum();
 }
 
 //2 parametreli constructors
@@ -243,6 +243,35 @@ void complexNum::tokenString()
 			A = 0;
 			kontrolIntDouble = true;
 		}
+	}
+}
+
+void complexNum::convertNum()
+{
+	if (i_var_mi == true && i_onunde_sayi_var_mi == true)
+	{
+		b = atoi(bTut.c_str());
+	}
+	
+	bool doubleKontrol = false;
+
+	for (int i = 0; i < aTut.length(); i++)
+	{
+		if (aTut[i] == '.')
+		{
+			doubleKontrol = true;
+		}
+	}
+
+	if (doubleKontrol == true)
+	{
+		a = atof(aTut.c_str());
+		kontrolIntDouble = false;
+	}
+	else
+	{
+		A = atoi(aTut.c_str());
+		kontrolIntDouble = true;
 	}
 }
 

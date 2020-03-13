@@ -9,6 +9,7 @@ int main()
 	try
 	{
 		complexNum sayi("8-5i");
+		sayi.print();
 	}
 	catch (int &a)
 	{

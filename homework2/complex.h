@@ -37,6 +37,7 @@ private:
 	void control();
 	void counter();
 	void tokenString();
+	void convertNum();
 };
 
 
