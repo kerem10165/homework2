@@ -8,16 +8,18 @@ int main()
 {
 	try
 	{
-		complexNum sayi("+2i");
+		complexNum sayi("+8-5i");
 	}
 	catch (int &a)
 	{
 		if (a == 0)
 		{
-			cout << "Hata!!" << endl;
+			cout << "Hatali giris!!" << endl;
 		}
 	}
+
 	
+
 
 	return 0;
 }

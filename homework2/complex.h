@@ -27,10 +27,16 @@ private:
 	std::string kopyala;
 	std::string aTut;
 	std::string bTut;
+
+	bool i_var_mi = false;
+	bool i_onunde_sayi_var_mi = false;
+	bool sayi_var_mi = false;
+
 	
 	void deleteSpace();
-	void textDivide();
 	void control();
+	void counter();
+	void tokenString();
 };
 
 
