@@ -8,7 +8,7 @@ int main()
 {
 	try
 	{
-		complexNum sayi("+8-5i");
+		complexNum sayi("8-5i");
 	}
 	catch (int &a)
 	{
